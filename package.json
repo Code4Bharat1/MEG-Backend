@@ -1,0 +1,21 @@
+{
+  "name": "meg_backend",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000M\u0000E\u0000G\u0000-\u0000B\u0000a\u0000c\u0000k\u0000e\u0000n\u0000d\u0000\r\u0000 \u0000",
+  "main": "./src/server.js",
+  "scripts": {
+    "dev" : "nodemon ./src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Code4Bharat1/MEG-Backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/Code4Bharat1/MEG-Backend/issues"
+  },
+  "homepage": "https://github.com/Code4Bharat1/MEG-Backend#readme"
+}
