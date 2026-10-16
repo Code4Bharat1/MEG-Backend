@@ -1,7 +1,7 @@
 import Member from "../models/member.model"
 import bcrypt from "bcryptjs"
 
-const userLogin = async (req, res) =>{
+const memberLogin = async (req, res) =>{
     try{
         const {email, password} = req.body;
         if(!email || !password){

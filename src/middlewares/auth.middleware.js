@@ -1,11 +1,11 @@
 import jwt from "jsonwebtoken";
 
-import { user } from "../models/user.model.js";
+import { visiter } from "../models/visiter.model.js";
 import { admin } from "../models/admin.model.js";
 import { member } from "../models/member.model.js";
 
 
-export const project = async (req, res, next) => {
+export const verify = async (req, res, next) => {
     try {
         const authHeader = req.headers.authorization;
         if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -23,7 +23,7 @@ export const project = async (req, res, next) => {
         );
 
         const model = {
-            user, member, admin,
+            visiter, member, admin,
         };
         const AccountType = decode.AccountType;
         const Accountmodel = model[AccountType];

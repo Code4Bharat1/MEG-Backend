@@ -1,7 +1,7 @@
-import { user } from "../models/user.model.js";
+import { visiter } from "../models/visiter.model.js";
 import bcrypt from "bcrypt";
 
-export const createUser = async (req, res) => {
+export const createVisiter = async (req, res) => {
     try {
         const { name, email, phone, password } = req.body;
         if (!name || !email || !phone || !password) {
@@ -12,9 +12,9 @@ export const createUser = async (req, res) => {
         }
         const normalizedEmail = email.trim().toLowerCase();
         const normalizedPhone = String(phone).trim();
-        const existUser = await user.findOne({ $or: [{ email: normalizedEmail }, { phone: normalizedPhone }] });
+        const existVisiter = await visiter.findOne({ $or: [{ email: normalizedEmail }, { phone: normalizedPhone }] });
 
-        if (existUser) {
+        if (existVisiter) {
             return res.status(400).json({
                 success: false,
                 message: "User already exists"
@@ -22,7 +22,7 @@ export const createUser = async (req, res) => {
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = await user.create({
+        const newVisiter = await visiter.create({
             name: name.trim(),
             email: normalizedEmail,
             phone: normalizedPhone,
@@ -33,18 +33,18 @@ export const createUser = async (req, res) => {
             success: true,
             message: "User created successfully",
             data: {
-                id: newUser._id,
-                name: newUser.name,
-                email: newUser.email,
-                phone: newUser.phone,
-                is_active: newUser.is_active,
-                createdAt: newUser.createdAt,
+                id: newVisiter._id,
+                name: newVisiter.name,
+                email: newVisiter.email,
+                phone: newVisiter.phone,
+                is_active: newVisiter.is_active,
+                createdAt: newVisiter.createdAt,
             },
         });
 
 
     } catch (error) {
-        console.error("create user error:", error);
+        console.error("create visiter error:", error);
 
         return res.status(500).json({
             success: false,
