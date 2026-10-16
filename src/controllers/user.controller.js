@@ -20,8 +20,8 @@ export const createUser = async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = await user.create({
-            name: name.trim,
-            email: email.trim().lowercase(),
+            name: name.trim(),
+            email: email.trim().toLowerCase(),
             phone: phone.trim(),
             password: hashedPassword,
         });
