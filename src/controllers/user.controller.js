@@ -10,7 +10,10 @@ export const createUser = async (req, res) => {
                 message: "All feilds are required"
             })
         }
-        const existUser = await user.findOne({ email });
+        const normalizedEmail = email.trim().toLowerCase();
+        const normalizedPhone = String(phone).trim();
+        const existUser = await user.findOne({ $or: [{ email: normalizedEmail }, { phone: normalizedPhone }] });
+
         if (existUser) {
             return res.status(400).json({
                 success: false,
@@ -21,8 +24,8 @@ export const createUser = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = await user.create({
             name: name.trim(),
-            email: email.trim().toLowerCase(),
-            phone: phone.trim(),
+            email: normalizedEmail,
+            phone: normalizedPhone,
             password: hashedPassword,
         });
 
