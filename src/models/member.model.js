@@ -15,7 +15,7 @@ const memberSchema = new mongoose.Schema({
         lowercase : true,
        },
        phone:{
-        type : Number,
+        type : String,
         required : true,
         trim : true,
        },
