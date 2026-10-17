@@ -1,7 +1,7 @@
-import Member from "../models/member.model"
+import {Member} from "../models/member.model.js"
 import bcrypt from "bcryptjs"
 
-const memberLogin = async (req, res) =>{
+export const memberLogin = async (req, res) =>{
     try{
         const {email, password} = req.body;
         if(!email || !password){
@@ -48,3 +48,4 @@ const memberLogin = async (req, res) =>{
         });
     }
 }
+
