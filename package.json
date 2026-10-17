@@ -4,7 +4,8 @@
   "description": "��#\u0000 \u0000M\u0000E\u0000G\u0000-\u0000B\u0000a\u0000c\u0000k\u0000e\u0000n\u0000d\u0000\r\u0000 \u0000",
   "main": "./src/server.js",
   "scripts": {
-    "dev": "nodemon ./src/server.js"
+    "dev": "nodemon ./src/server.js",
+    "test" : "vitest run"
   },
   "repository": {
     "type": "git",
@@ -27,5 +28,8 @@
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.11.2",
     "nodemon": "^1.14.10"
+  },
+  "devDependencies": {
+    "vitest": "^5.0.5"
   }
 }
