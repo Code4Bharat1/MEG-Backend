@@ -33,10 +33,10 @@ export const memberLogin = async (req, res) =>{
         return res.status(200).json({
             success : true,
             message : "Loggin successfull",
-            user: {
-                id: user._id,
-                name: user.name,
-                email: user.email
+            member: {
+                id: member._id,
+                name: member.name,
+                email: member.email
             }
         })
     }
