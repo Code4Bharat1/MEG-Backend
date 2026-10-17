@@ -1,5 +1,5 @@
-import { visitor, visitor } from "../models/visitor.model.js";
 import bcrypt from "bcrypt";
+import { visitor } from "../models/visitor.model.js";
 
 export const createvisitor = async (req, res) => {
     try {
@@ -60,13 +60,46 @@ export const visitorLogin = async (req, res) => {
             return res.status(400).json({
                 success: false,
                 message: "All feilds are required",
-            })
+            });
         }
+       
         const visitor = await visitor.findOne({
             email: email.toLowerCase().trim()
         }).select("+password");
+        
+        if(!visitor) {
+            return res.status(401).json({
+                success : false,
+                message : "Invalid email or password"
+            });
+        }
+
+        const isMatch = await bcrypt.compare(password , visitor.password);
+
+        if(!isMatch){
+            return res.status(401).json({
+                success : false,
+                message : "Invalid email or password"
+            });
+        }
+
+        return res.status(200).json({
+            success : true,
+            message : "Login successfull",
+            visitor: {
+                id : visitor._id,
+                name : visitor.name,
+                email : visitor.email
+            }
+        })
+
 
     } catch (error) {
+        console.error("visitor login error :" , error);
 
+        return res.status(500).json({
+            success : false,
+            message : "Internal server error",
+        });
     }
 }
