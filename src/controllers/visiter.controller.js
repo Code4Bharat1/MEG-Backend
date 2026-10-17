@@ -1,7 +1,7 @@
-import { visiter } from "../models/visiter.model.js";
+import { visitor, visitor } from "../models/visitor.model.js";
 import bcrypt from "bcrypt";
 
-export const createVisiter = async (req, res) => {
+export const createvisitor = async (req, res) => {
     try {
         const { name, email, phone, password } = req.body;
         if (!name || !email || !phone || !password) {
@@ -12,9 +12,9 @@ export const createVisiter = async (req, res) => {
         }
         const normalizedEmail = email.trim().toLowerCase();
         const normalizedPhone = String(phone).trim();
-        const existVisiter = await visiter.findOne({ $or: [{ email: normalizedEmail }, { phone: normalizedPhone }] });
+        const existvisitor = await visitor.findOne({ $or: [{ email: normalizedEmail }, { phone: normalizedPhone }] });
 
-        if (existVisiter) {
+        if (existvisitor) {
             return res.status(400).json({
                 success: false,
                 message: "User already exists"
@@ -22,7 +22,7 @@ export const createVisiter = async (req, res) => {
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newVisiter = await visiter.create({
+        const newvisitor = await visitor.create({
             name: name.trim(),
             email: normalizedEmail,
             phone: normalizedPhone,
@@ -33,22 +33,40 @@ export const createVisiter = async (req, res) => {
             success: true,
             message: "User created successfully",
             data: {
-                id: newVisiter._id,
-                name: newVisiter.name,
-                email: newVisiter.email,
-                phone: newVisiter.phone,
-                is_active: newVisiter.is_active,
-                createdAt: newVisiter.createdAt,
+                id: newvisitor._id,
+                name: newvisitor.name,
+                email: newvisitor.email,
+                phone: newvisitor.phone,
+                is_active: newvisitor.is_active,
+                createdAt: newvisitor.createdAt,
             },
         });
 
 
     } catch (error) {
-        console.error("create visiter error:", error);
+        console.error("create visitor error:", error);
 
         return res.status(500).json({
             success: false,
             message: "Internal server error",
         });
+    }
+}
+
+export const visitorLogin = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        if (!email || !password) {
+            return res.status(400).json({
+                success: false,
+                message: "All feilds are required",
+            })
+        }
+        const visitor = await visitor.findOne({
+            email: email.toLowerCase().trim()
+        }).select("+password");
+
+    } catch (error) {
+
     }
 }
