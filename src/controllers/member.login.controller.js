@@ -61,9 +61,9 @@ export const memberResgister = async (req, res) => {
         }
         const normalizedEmail = email.trim().toLowerCase();
         const normalizedPhone = String(phone).trim();
-        const existVisiter = await member.findOne({ $or: [{ email: normalizedEmail }, { phone: normalizedPhone }] });
+        const existMember = await Member.findOne({ $or: [{ email: normalizedEmail }, { phone: normalizedPhone }] });
 
-        if (existVisiter) {
+        if (existMember) {
             return res.status(400).json({
                 success: false,
                 message: "User already exists"
@@ -95,7 +95,7 @@ export const memberResgister = async (req, res) => {
             },
         });
     } catch (error) {
-        console.error("create visiter error:", error);
+        console.error("create member error:", error);
 
         return res.status(500).json({
             success: false,
