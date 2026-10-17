@@ -24,6 +24,14 @@ const visitorSchema = new mongoose.Schema({
               required: true,
               select: false,
        },
+        bni_id : {
+        type : String,
+        required : true,
+       },
+       bni_certificate : {
+        type : String,
+        required : true,
+       },
        refresh_token: {
               type: String,
               default: null,
