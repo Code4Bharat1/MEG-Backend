@@ -33,5 +33,8 @@ const visitorSchema = new mongoose.Schema({
               type: Boolean,
               default: true,
        }
+},{timestamps: true})
+export const user = mongoose.model("visiter", visiterSchema);
+
 }, { timestamps: true })
 export const visitor = mongoose.model("visitor", visitorSchema);
