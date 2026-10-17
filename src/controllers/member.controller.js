@@ -34,14 +34,14 @@ export const memberLogin = async (req, res) => {
         return res.status(200).json({
             success: true,
             message: "Loggin successfull",
-            user: {
-                id: user._id,
-                name: user.name,
-                email: user.email
+            member: {
+                id: member._id,
+                name: member.name,
+                email: member.email
             }
         })
     }
-    catch {
+    catch (error) {
         console.error("Login error:", error);
         return res.status(500).json({
             success: false,
@@ -76,8 +76,8 @@ export const memberResgister = async (req, res) => {
             email: normalizedEmail,
             phone: normalizedPhone,
             password: hashedPassword,
-            bni_id : bni_id.trim(),
-            bni_certificate : bni_certificate,
+            bni_id: bni_id.trim(),
+            bni_certificate: bni_certificate,
         });
 
         return res.status(201).json({

@@ -9,7 +9,7 @@ export const createAdmin = async (req, res) => {
         if (!email || !password || !role) {
             return res.status(400).json({
                 success: false,
-                message: "Email and Password are required",
+                message: "Email, password, and role are required",
             });
         }
         const normalizedEmail = email.trim().toLowerCase();
@@ -61,12 +61,15 @@ export const loginAdmin = async (req, res) => {
         const normalizedEmail = email.trim().toLowerCase();
         const normalizedRole = role.trim().toLowerCase();
 
-        const existAdmin = await admin.findOne({ email: normalizedEmail, role: normalizedRole })
+        const existAdmin = await admin.findOne({
+            email: normalizedEmail,
+            role: normalizedRole
+        })
             .select("+password");
 
 
         if (!existAdmin) {
-            return res.status(404).json({
+            return res.status(401).json({
                 success: false,
                 message: "Invalid credentials",
             });
@@ -85,9 +88,9 @@ export const loginAdmin = async (req, res) => {
         }
 
         if (!existAdmin.is_active) {
-            return res.status(401).json({
+            return res.status(403).json({
                 success: false,
-                message: "Account is inactive",
+                message: "Admin Account is inactive",
             });
         }
 
