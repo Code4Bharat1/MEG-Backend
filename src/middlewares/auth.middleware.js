@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-import { visiter } from "../models/visiter.model.js";
+import { visitor } from "../models/visitor.model.js";
 import { admin } from "../models/admin.model.js";
 import { member } from "../models/member.model.js";
 
@@ -23,7 +23,7 @@ export const verify = async (req, res, next) => {
         );
 
         const model = {
-            visiter, member, admin,
+            visitor, member, admin,
         };
         const AccountType = decode.AccountType;
         const Accountmodel = model[AccountType];
