@@ -1,26 +1,28 @@
-import {describe , expect , it } from "vitest";
+import { describe, expect, it } from "vitest";
 import { admin } from "../../src/models/login.model.js";
 
-describe("admin model",  () => {
-  it("documents an admin" , () => {
+describe("admin model", () => {
+  it("normalizes email and applies account defaults", () => {
+    const account = new admin({
+      email: "ADMIN@example.com",
+      password: "test-password",
+    });
 
-    const doc = new admin({
-      email : "zaidachhwa8486@gmail.com",
-      password : "zaid@13424",
-    })
-
-    expect(doc.email).toBe("zaidachhwa8486@gmail.com");
-    expect(doc.password).toBe("zaid@13424")
+    expect(account.email).toBe("admin@example.com");
+    expect(account.is_active).toBe(true);
+    expect(account.refresh_token).toBeNull();
   });
 
-  it("requires the email and password from the admin",  () => {
+  it("requires email and password", async () => {
+    const account = new admin({});
+    const error = await account.validate().catch((validationError) => validationError);
 
-    const doc = new admin({})
+    expect(error.errors.email).toBeDefined();
+    expect(error.errors.password).toBeDefined();
+  });
 
-    const error =  doc.validateSync();
-
-    expect(error?.errors?.email).toBeDefined();
-    expect(error?.errors?.password).toBeDefined();
-
-  })
-})
+  it("does not select password or refresh token by default", () => {
+    expect(admin.schema.path("password").options.select).toBe(false);
+    expect(admin.schema.path("refresh_token").options.select).toBe(false);
+  });
+});
