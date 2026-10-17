@@ -41,7 +41,7 @@ export const memberLogin = async (req, res) => {
             }
         })
     }
-    catch {
+    catch (error){
         console.error("Login error:", error);
         return res.status(500).json({
             success: false,
